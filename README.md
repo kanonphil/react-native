@@ -1,2 +1,2 @@
-npx create-expo-app@latest
+npx create-expo-app@latest  
 npx expo start
