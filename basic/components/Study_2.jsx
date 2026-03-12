@@ -1,51 +1,60 @@
-import { Button, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useState } from 'react'
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { useState } from 'react'
 
 const Study_2 = () => {
-  const [userInfo, setUserInfo] = useState({ 
+  const [loginData, setLoginData] = useState({ 
     id: '', 
     pw: '' 
   })
   const [isLogin, setIsLogin] = useState(false)
 
+  const handleLogin = (key, value) => {
+    setLoginData({
+      ...loginData,
+      [key]: value
+    })
+  }
+
   return (
     <View style={styles.inputContainer}>
-      <Text>Study_2</Text>
+      <Text style={styles.title}>
+        Login
+      </Text>
       <TextInput
         style={styles.input}
+        placeholder='Input Your ID'
+        value={loginData.id}
         onChangeText={text => {
-          setUserInfo({
-            ...userInfo, id: text
-          })
+          handleLogin('id', text)
           setIsLogin(false)
         }}
-        placeholder='Input Your ID'
       />
       <TextInput
         style={styles.input}
+        placeholder='Input Your Password'
+        value={loginData.pw}
         onChangeText={text => {
-          setUserInfo({
-            ...userInfo, 
-            pw: text
-          })
+          handleLogin('pw', text)
           setIsLogin(false)
         }}
         textContentType="password"
         secureTextEntry
-        placeholder='Input Your Password'
       />
 
       <Pressable
-        onPress={() => setIsLogin(true)}
         style={styles.btnContainer}
+        onPress={() => {
+          setIsLogin(true)
+        }}
       >
         <Text style={styles.btn}>로그인</Text>
       </Pressable>
 
       {isLogin && (
         <View>
-          <Text>아이디: {userInfo.id}</Text>
-          <Text>비밀번호: {userInfo.pw}</Text>
+          <Text>입력한 정보</Text>
+          <Text>아이디: {loginData.id}</Text>
+          <Text>비밀번호: {loginData.pw}</Text>
         </View>
       )}
     </View>
@@ -56,7 +65,14 @@ export default Study_2
 
 const styles = StyleSheet.create({
   inputContainer: {
-    gap: 10
+    width: '80%',
+    gap: 10,
+    marginHorizontal: 'auto'
+  },
+  title: {
+    fontWeight: 600,
+    fontSize: 30,
+    textAlign: 'center'
   },
   input: {
     borderWidth: 1,
@@ -65,7 +81,7 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     backgroundColor: 'blue',
-    height: 34,
+    height: 40,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4
