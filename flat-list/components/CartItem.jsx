@@ -1,25 +1,49 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
+import { useState } from 'react'
 
-const CartItem = ({item, deleteItem}) => {
+const CartItem = ({item}) => {
+  // 현재 수정중인지 상태를 파악하기 위한 state 변수
+  const [isEditing, setIsEditing] = useState(false)
   
   return (
     <View style={styles.itemContainer}>
-      <Text style={styles.title}>
-        {item.item}
-      </Text>
-      <MaterialIcons 
-        name='mode-edit-outline'
-        size={24}
-        color='black'
-        style={styles.icon}
-      />
-      <MaterialIcons 
-        name='delete-forever'
-        size={24}
-        color='black'
-        style={styles.icon}
-      />
+      {isEditing 
+        ? 
+        <>
+          <TextInput 
+            style={styles.input}
+            value={item.item}
+          />
+        </>
+        :
+        <>
+          <Text style={styles.title}>
+            {item.item}
+          </Text>
+          <Pressable
+            onPress={() => setIsEditing(true)}
+            style={styles.iconContainer}
+          >
+            <MaterialIcons 
+              name='mode-edit-outline'
+              size={24}
+              color='black'
+              style={styles.icon}
+            />
+          </Pressable>
+          <Pressable
+            style={styles.iconContainer}
+          >
+            <MaterialIcons 
+              name='delete-forever'
+              size={24}
+              color='black'
+              style={styles.icon}
+            />
+          </Pressable>
+        </>
+      }
     </View>
   )
 }
@@ -38,7 +62,12 @@ const styles = StyleSheet.create({
     width: '80%',
     fontSize: 20
   },
-  icon: {
-    width: '10%'
+  iconContainer: {
+    width: '10%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  input: {
+    borderWidth: 1
   }
 })

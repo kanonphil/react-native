@@ -1,19 +1,12 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import { dummy_data } from '../data/dummy'
+import { FlatList, StyleSheet, View } from 'react-native'
+
 import CartItem from './CartItem'
 
-const CartList = () => {
-  const [cartList, setCartList] = useState(dummy_data)
-
-  const deleteItem = (id) => {
-    setCartList(prev =>
-      prev.filter(item => item.id !== id)
-    )
-  }
+const CartList = ({cartList}) => {
   
   return (
     <View style={styles.listContainer}>
+      
       <FlatList 
         // 반복할 데이터
         data={cartList}
@@ -22,7 +15,6 @@ const CartList = () => {
         renderItem={({item}) => (
           <CartItem 
             item={item}
-            deleteItem={deleteItem}
           />
         )}
 
